@@ -1,0 +1,7 @@
+.idea
+.editorconfig
+node_modules
+dist
+typings
+src/**/*.js
+src/**/*.js.map
