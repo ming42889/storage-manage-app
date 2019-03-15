@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CreateFromAddressComponent } from './address/create-from-address.component';
+import { AddressFormComponent } from './address/address-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -12,21 +12,23 @@ import {
   MatAutocompleteModule,
   MatBadgeModule,
   MatBottomSheetModule,
+  MatDividerModule,
+  MatNativeDateModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
   MatChipsModule,
   MatDatepickerModule,
+  MatFormFieldModule,
   MatDialogModule,
-  MatDividerModule,
+
   MatExpansionModule,
   MatGridListModule,
   MatIconModule,
-  MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatNativeDateModule,
+
   MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
@@ -44,28 +46,36 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatTreeModule,
+  MatCommonModule,
 } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+
+import { PlatformModule } from '@angular/cdk/platform';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { ObserversModule } from '@angular/cdk/observers';
+
 import { EasyPostService } from './shared/easy-post.service';
+import { ShipmentFormComponent } from './shipment/shipment-form.component';
+
 
 const MATERIAL_MODULES = [
   MatAutocompleteModule,
-  MatBadgeModule,
-  MatBottomSheetModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
-  MatCheckboxModule,
   MatChipsModule,
+  MatCheckboxModule,
   MatDatepickerModule,
+  MatTableModule,
+  MatBadgeModule,
   MatDialogModule,
-  MatDividerModule,
   MatExpansionModule,
+  MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatNativeDateModule,
   MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
@@ -78,18 +88,25 @@ const MATERIAL_MODULES = [
   MatSnackBarModule,
   MatSortModule,
   MatStepperModule,
-  MatTableModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
+  MatBottomSheetModule,
+  MatDividerModule,
+  MatNativeDateModule,
   MatTreeModule,
+  OverlayModule,
+  PlatformModule,
+  MatCommonModule,
+  ObserversModule
 ];
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateFromAddressComponent,
+    AddressFormComponent,
+    ShipmentFormComponent,
   ],
   imports: [
     BrowserModule,

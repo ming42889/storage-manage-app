@@ -30,10 +30,10 @@ app.route('/api').get((req, res) => {
     res.send({ hello: 'world' });
 });
 
-app.route('/api/create-from-address').post((req, res) => {
+app.route('/api/create-address').post((req, res) => {
     console.log(req.body)
-    const fromAddress = new api.Address(req.body);
-    fromAddress.save().then(
+    const address = new api.Address(req.body);
+    address.save().then(
         result => {
             console.log(result)
             res.send(200, result);
@@ -47,3 +47,4 @@ app.get('/*', function (req, res) {
 
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
+// app.listen(4200);

@@ -1,0 +1,24 @@
+<div style="width:50%;display: inline-block;">
+    <div style="padding:5px">
+        <app-address-form [title]="'From Address'" [(address)]="shipment.from">
+        </app-address-form>
+        <button mat-raised-button color="primary" (click)="createAddress(shipment.from, 'from')">create</button>
+    </div>
+</div>
+
+<div style="width:50%;display: inline-block;">
+    <div style="padding:5px">
+        <app-address-form [title]="'To Address'" [(address)]="shipment.to"></app-address-form>
+        <button mat-raised-button color="primary" (click)="createAddress(shipment.to, 'to')">create</button>
+    </div>
+</div>
+
+
+<div style="word-break: break-all;width:50%;display: inline-block;margin-top : 10px">
+    {{toJSONString(shipment.from)}}
+</div>
+
+
+<div style="word-break: break-all;width:50%;display: inline-block;margin-top : 10px">
+    {{toJSONString(shipment.to)}}
+</div>

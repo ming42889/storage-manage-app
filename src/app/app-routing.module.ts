@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CreateFromAddressComponent } from './address/create-from-address.component';
+import { ShipmentFormComponent } from './shipment/shipment-form.component';
 
 const routes: Routes = [
-  { path: 'create-from-address', component: CreateFromAddressComponent }
+  { path: '', redirectTo: '/create-shipment', pathMatch: 'full' },
+  { path: 'create-shipment', component: ShipmentFormComponent }
 ];
 
 @NgModule({
