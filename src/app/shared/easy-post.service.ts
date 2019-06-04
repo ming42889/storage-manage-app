@@ -9,6 +9,26 @@ export class EasyPostService {
     baseUrl = 'https://lkjlkdjfls.herokuapp.com/api';
     // baseUrl = 'http://127.0.0.1:4200/api';
 
+
+    createCustomsInfo(customsInfo: any, customsItems: any[]) {
+        return this.http.post(this.baseUrl +
+            '/create-customsInfo', {
+                customsInfo,
+                customsItems
+            });
+    }
+
+    createParcel(parcel: any) {
+        return this.http.post(this.baseUrl +
+            '/create-parcel', parcel);
+    }
+
+
+    createCustomsItem(customsItem): Observable<any> {
+        return this.http.post(this.baseUrl +
+            '/create-customsItem', customsItem);
+    }
+
     createAddress(address): Observable<any> {
         return this.http.post(this.baseUrl +
             '/create-address', address);
@@ -19,4 +39,5 @@ export class EasyPostService {
         return this.http.post(this.baseUrl +
             '/create-shipment', shipment);
     }
+
 }

@@ -7,9 +7,12 @@ import { EasyPostService } from '../shared/easy-post.service';
     templateUrl: 'shipment-form.component.html'
 })
 export class ShipmentFormComponent {
+    customsItem: any = {};
     shipment: any = {
         from: {},
-        to: {}
+        to: {},
+        customsInfo: {},
+        parcel: {}
     };
     result: any = {};
 
@@ -21,7 +24,44 @@ export class ShipmentFormComponent {
             .subscribe(
                 result => {
                     console.log(result);
-                    this.shipment[saveToField] = result;
+                }
+            );
+    }
+
+    createCustomsItem(customsItem, saveToField: string) {
+        this.easyPostService.createCustomsItem(customsItem)
+            .subscribe(
+                result => {
+                    console.log(result);
+                }
+            );
+    }
+
+    createCustomsInfo() {
+        this.easyPostService.createCustomsInfo(this.shipment.customsInfo, [this.customsItem])
+            .subscribe(
+                result => {
+                    console.log(result);
+                }
+            );
+    }
+
+    createParcel() {
+        this.easyPostService.createParcel(this.shipment.parcel)
+            .subscribe(
+                result => {
+                    console.log(result);
+                }
+            );
+    }
+
+    createShipment() {
+        this.shipment.customsItems = [this.customsItem];
+        this.easyPostService.createShipment(this.shipment)
+            .subscribe(
+                result => {
+                    console.log(result);
+                    this.result.content = JSON.stringify(result);
                 }
             );
     }

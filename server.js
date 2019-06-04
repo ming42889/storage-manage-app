@@ -37,9 +37,78 @@ app.route('/api/create-address').post((req, res) => {
         result => {
             console.log(result)
             res.send(200, result);
+        }, error => { console.log(error) });
+});
+
+
+app.route('/api/create-customsItem').post((req, res) => {
+    console.log(req.body)
+    const customsItem = new api.CustomsItem(req.body);
+    customsItem.save().then(
+        result => {
+            console.log(result)
+            res.send(200, result);
+        }, error => { console.log(error) });
+});
+
+app.route('/api/create-customsInfo').post((req, res) => {
+    console.log(req.body)
+    const request = new api.CustomsItem(req.body);
+    let customs_items = [];
+    request.customsItems.forEach(item => {
+        customs_items.push(new api.CustomsItem(item))
+    });
+
+    let customs_info = new api.CustomsInfo(request.customsInfo);
+    customs_info.customs_items = customs_items;
+    customs_info.save().then(
+        result => {
+            console.log(result)
+            res.send(200, result);
+        }, error => {
+            console.log(error);
+            error.error.error.errors.forEach(e => console.log(e))
         });
 });
 
+
+app.route('/api/create-parcel').post((req, res) => {
+    console.log(req.body)
+    const parcel = new api.Parcel(req.body);
+    parcel.save().then(
+        result => {
+            console.log(result)
+            res.send(200, result);
+        }, error => { console.log(error) });
+});
+
+app.route('/api/create-shipment').post((req, res) => {
+    console.log(req.body)
+    const request = new api.Parcel(req.body);
+    const toAddress = new api.Address(request.toAddress);
+    const fromAddress = new api.Address(request.fromAddress);
+    const parcel = new api.Parcel(request.parcel);
+
+    let customs_items = [];
+    request.customsItems.forEach(item => {
+        customs_items.push(new api.CustomsItem(item))
+    });
+
+    let customsInfo = new api.CustomsInfo(request.customsInfo);
+    customsInfo.customs_items = customs_items;
+
+    const shipment = new api.Shipment({
+        to_address: toAddress,
+        from_address: fromAddress,
+        parcel: parcel,
+        customs_info: customsInfo
+    });
+    shipment.save().then(
+        result => {
+            console.log(result)
+            res.send(200, result);
+        }, error => { console.log(error) });
+});
 
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '/dist/storage-manage-app/index.html'));

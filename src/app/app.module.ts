@@ -56,6 +56,7 @@ import { ObserversModule } from '@angular/cdk/observers';
 
 import { EasyPostService } from './shared/easy-post.service';
 import { ShipmentFormComponent } from './shipment/shipment-form.component';
+import { CustomsItemComponent } from './customsItem/customs-item.component';
 
 
 const MATERIAL_MODULES = [
@@ -107,6 +108,7 @@ const MATERIAL_MODULES = [
     AppComponent,
     AddressFormComponent,
     ShipmentFormComponent,
+    CustomsItemComponent
   ],
   imports: [
     BrowserModule,

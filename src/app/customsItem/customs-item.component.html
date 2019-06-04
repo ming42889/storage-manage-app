@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field style="width:75%">
+            <input matInput placeholder="description" [(ngModel)]="customsItem.description"
+                (ngModelChange)="onModelChange()">
+        </mat-form-field>
+        <mat-form-field style="width:25%">
+            <input matInput placeholder="quantity" type="number" [(ngModel)]="customsItem.quantity"
+                (ngModelChange)="onModelChange()">
+        </mat-form-field>
+        <mat-form-field style="width:25%">
+            <input matInput placeholder="weight" type="number" [(ngModel)]="customsItem.weight"
+                (ngModelChange)="onModelChange()">
+        </mat-form-field>
+        <mat-form-field style="width:25%">
+            <input matInput placeholder="value" [(ngModel)]="customsItem.value" (ngModelChange)="onModelChange()">
+        </mat-form-field>
+        <mat-form-field style="width:25%">
+            <input matInput placeholder="hs_tariff_number" [(ngModel)]="customsItem.hs_tariff_number"
+                (ngModelChange)="onModelChange()">
+        </mat-form-field>
+        <mat-form-field style="width:25%">
+            <input matInput placeholder="origin_country" [(ngModel)]="customsItem.origin_country"
+                (ngModelChange)="onModelChange()">
+        </mat-form-field>
+    </mat-card-content>
+</mat-card>
