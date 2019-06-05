@@ -110,6 +110,20 @@ app.route('/api/create-shipment').post((req, res) => {
         }, error => { console.log(error) });
 });
 
+app.get('/api/regenerate-rates/:id', function (req, res, next) {
+    console.log('The id: ' + req.params.id);
+    const shipmentId = req.params.id;
+    api.Shipment.retrieve(shipmentId).then(s => {
+        s.regenerateRates()
+            .then(s => {
+                console.dir(s.rates, {
+                    depth: null,
+                });
+                res.send(200, result);
+            }, error => { console.log(error) });
+    });
+});
+
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '/dist/storage-manage-app/index.html'));
 });

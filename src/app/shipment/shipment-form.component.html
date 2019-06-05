@@ -1,13 +1,13 @@
 <div style="width:50%;display: inline-block;">
     <div style="padding:5px">
-        <app-address-form [title]="'From Address'" [(address)]="shipment.from">
+        <app-address-form [title]="'From Address'" [(address)]="shipment.fromAddress">
         </app-address-form>
     </div>
 </div>
 
 <div style="width:50%;display: inline-block;">
     <div style="padding:5px">
-        <app-address-form [title]="'To Address'" [(address)]="shipment.to"></app-address-form>
+        <app-address-form [title]="'To Address'" [(address)]="shipment.toAddress"></app-address-form>
     </div>
 </div>
 <div style="padding:5px">
@@ -17,7 +17,11 @@
         </mat-card-header>
         <mat-card-content>
             <mat-form-field style="width:50%">
-                <input matInput placeholder="eel_pfc" [(ngModel)]="shipment.customsInfo.eel_pfc">
+                <mat-select placeholder="eel_pfc" [(ngModel)]="shipment.customsInfo.eel_pfc">
+                    <mat-option *ngFor="let type of ['NOEEI 30.37(a)' , 'AES X20120502123456']" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <span style="width:50%">
                 <mat-checkbox [(ngModel)]="shipment.customsInfo.customs_certify">customs_certify</mat-checkbox>
@@ -26,22 +30,37 @@
                 <input matInput placeholder="customs_signer" [(ngModel)]="shipment.customsInfo.customs_signer">
             </mat-form-field>
             <mat-form-field style="width:50%">
-                <input matInput placeholder="contents_type" [(ngModel)]="shipment.customsInfo.contents_type">
+                <mat-select placeholder="contents_type" [(ngModel)]="shipment.customsInfo.contents_type">
+                    <mat-option
+                        *ngFor="let type of ['documents', 'gift', 'merchandise', 'returned_goods', 'sample',  'other']"
+                        [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <mat-form-field style="width:50%">
                 <input matInput placeholder="contents_explanation"
                     [(ngModel)]="shipment.customsInfo.contents_explanation">
             </mat-form-field>
             <mat-form-field style="width:50%">
-                <input matInput placeholder="restriction_type" [(ngModel)]="shipment.customsInfo.restriction_type">
+                <mat-select placeholder="restriction_type" [(ngModel)]="shipment.customsInfo.restriction_type">
+                    <mat-option
+                        *ngFor="let type of ['none', 'other', 'quarantine',  'sanitary_phytosanitary_inspection']"
+                        [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <mat-form-field style="width:50%">
                 <input matInput placeholder="restriction_comments"
                     [(ngModel)]="shipment.customsInfo.restriction_comments">
             </mat-form-field>
             <mat-form-field style="width:50%">
-                <input matInput placeholder="non_delivery_option"
-                    [(ngModel)]="shipment.customsInfo.non_delivery_option">
+                <mat-select placeholder="non_delivery_option" [(ngModel)]="shipment.customsInfo.non_delivery_option">
+                    <mat-option *ngFor="let type of ['abandon' , 'return']" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-divider></mat-divider>
@@ -61,8 +80,13 @@
                 <input matInput placeholder="hs_tariff_number" [(ngModel)]="customsItem.hs_tariff_number">
             </mat-form-field>
             <mat-form-field style="width:25%">
-                <input matInput placeholder="origin_country" [(ngModel)]="customsItem.origin_country">
+                <mat-select placeholder="origin_country" [(ngModel)]="customsItem.origin_country">
+                    <mat-option *ngFor="let type of countries" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
+
         </mat-card-content>
     </mat-card>
 </div>
@@ -91,6 +115,71 @@
 
 
 <button mat-raised-button color="primary" (click)="createShipment()">Create Shipment</button>
+<button mat-raised-button color="primary" (click)="regenerateRates()">Regenerate Rates</button>
+
+
+<div *ngIf="result">
+    <!-- <div *ngFor="let rate of result.rates">
+        rate
+    </div> -->
+    <table mat-table [dataSource]="result.rates" class="mat-elevation-z8" style="width:100%">
+
+        <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="carrier">
+            <th mat-header-cell *matHeaderCellDef> carrier </th>
+            <td mat-cell *matCellDef="let element"> {{element.carrier}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="service">
+            <th mat-header-cell *matHeaderCellDef> service </th>
+            <td mat-cell *matCellDef="let element"> {{element.service}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="rate">
+            <th mat-header-cell *matHeaderCellDef> rate </th>
+            <td mat-cell *matCellDef="let element"> {{element.rate}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="currency">
+            <th mat-header-cell *matHeaderCellDef> currency </th>
+            <td mat-cell *matCellDef="let element"> {{element.currency}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="retail_rate">
+            <th mat-header-cell *matHeaderCellDef> retail_rate </th>
+            <td mat-cell *matCellDef="let element"> {{element.retail_rate}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="retail_currency">
+            <th mat-header-cell *matHeaderCellDef> retail_currency </th>
+            <td mat-cell *matCellDef="let element"> {{element.retail_currency}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="list_rate">
+            <th mat-header-cell *matHeaderCellDef> list_rate </th>
+            <td mat-cell *matCellDef="let element"> {{element.list_rate}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="list_currency">
+            <th mat-header-cell *matHeaderCellDef> list_currency </th>
+            <td mat-cell *matCellDef="let element"> {{element.list_currency}} </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
 
 <div style="word-break: break-all;margin-top : 10px">
     {{toJSONString(result.rates)}}

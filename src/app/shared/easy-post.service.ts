@@ -34,10 +34,14 @@ export class EasyPostService {
             '/create-address', address);
     }
 
-
     createShipment(shipment): Observable<any> {
         return this.http.post(this.baseUrl +
             '/create-shipment', shipment);
+    }
+
+    regenerateRates(shipmentId): Observable<any> {
+        return this.http.get(this.baseUrl +
+            '/regenerate-rates/' + shipmentId);
     }
 
 }

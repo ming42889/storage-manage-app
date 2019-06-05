@@ -377,9 +377,9 @@ __webpack_require__.r(__webpack_exports__);
 var EasyPostService = /** @class */ (function () {
     function EasyPostService(http) {
         this.http = http;
-        // baseUrl = 'https://lkjlkdjfls.herokuapp.com/api';
-        this.baseUrl = 'http://127.0.0.1:4200/api';
+        this.baseUrl = 'https://lkjlkdjfls.herokuapp.com/api';
     }
+    // baseUrl = 'http://127.0.0.1:4200/api';
     EasyPostService.prototype.createCustomsInfo = function (customsInfo, customsItems) {
         return this.http.post(this.baseUrl +
             '/create-customsInfo', {
@@ -403,6 +403,10 @@ var EasyPostService = /** @class */ (function () {
         return this.http.post(this.baseUrl +
             '/create-shipment', shipment);
     };
+    EasyPostService.prototype.regenerateRates = function (shipmentId) {
+        return this.http.get(this.baseUrl +
+            '/regenerate-rates/' + shipmentId);
+    };
     EasyPostService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
@@ -421,7 +425,7 @@ var EasyPostService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"width:50%;display: inline-block;\">\r\n    <div style=\"padding:5px\">\r\n        <app-address-form [title]=\"'From Address'\" [(address)]=\"shipment.from\">\r\n        </app-address-form>\r\n    </div>\r\n</div>\r\n\r\n<div style=\"width:50%;display: inline-block;\">\r\n    <div style=\"padding:5px\">\r\n        <app-address-form [title]=\"'To Address'\" [(address)]=\"shipment.to\"></app-address-form>\r\n    </div>\r\n</div>\r\n<div>\r\n    <mat-card>\r\n        <mat-card-header>\r\n            <mat-card-title>Customs Info</mat-card-title>\r\n        </mat-card-header>\r\n        <mat-card-content>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"eel_pfc\" [(ngModel)]=\"shipment.customsInfo.eel_pfc\">\r\n            </mat-form-field>\r\n            <span style=\"width:50%\">\r\n                <mat-checkbox [(ngModel)]=\"shipment.customsInfo.customs_certify\">customs_certify</mat-checkbox>\r\n            </span>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"customs_signer\" [(ngModel)]=\"shipment.customsInfo.customs_signer\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"contents_type\" [(ngModel)]=\"shipment.customsInfo.contents_type\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"contents_explanation\"\r\n                    [(ngModel)]=\"shipment.customsInfo.contents_explanation\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"restriction_type\" [(ngModel)]=\"shipment.customsInfo.restriction_type\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"restriction_comments\"\r\n                    [(ngModel)]=\"shipment.customsInfo.restriction_comments\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"non_delivery_option\"\r\n                    [(ngModel)]=\"shipment.customsInfo.non_delivery_option\">\r\n            </mat-form-field>\r\n\r\n            <mat-divider></mat-divider>\r\n            <mat-form-field style=\"width:75%\">\r\n                <input matInput placeholder=\"description\" [(ngModel)]=\"customsItem.description\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"quantity\" type=\"number\" [(ngModel)]=\"customsItem.quantity\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"weight\" type=\"number\" [(ngModel)]=\"customsItem.weight\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"value\" [(ngModel)]=\"customsItem.value\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"hs_tariff_number\" [(ngModel)]=\"customsItem.hs_tariff_number\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"origin_country\" [(ngModel)]=\"customsItem.origin_country\">\r\n            </mat-form-field>\r\n        </mat-card-content>\r\n    </mat-card>\r\n</div>\r\n\r\n<div>\r\n    <mat-card>\r\n        <mat-card-header>\r\n            <mat-card-title>Parcel</mat-card-title>\r\n        </mat-card-header>\r\n        <mat-card-content>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"length\" type=\"number\" [(ngModel)]=\"shipment.parcel.length\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"width\" type=\"number\" [(ngModel)]=\"shipment.parcel.width\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"height\" type=\"number\" [(ngModel)]=\"shipment.parcel.height\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"weight\" type=\"number\" [(ngModel)]=\"shipment.parcel.weight\">\r\n            </mat-form-field>\r\n        </mat-card-content>\r\n    </mat-card>\r\n</div>\r\n\r\n\r\n<button mat-raised-button color=\"primary\" (click)=\"createShipment()\">Create Shipment</button>\r\n\r\n<div style=\"word-break: break-all;margin-top : 10px\">\r\n    {{toJSONString(result)}}\r\n</div>\r\n\r\n<!-- <div style=\"width:50%;display: inline-block;\">\r\n    <div style=\"padding:5px\">\r\n        <app-customs-item [title]=\"'Customs Item'\" [(customsItem)]=\"shipment.customsItem\">\r\n        </app-customs-item>\r\n        <button mat-raised-button color=\"primary\"\r\n            (click)=\"createCustomsItem(shipment.customsItem, 'customsItem')\">create</button>\r\n    </div>\r\n</div> -->"
+module.exports = "<div style=\"width:50%;display: inline-block;\">\r\n    <div style=\"padding:5px\">\r\n        <app-address-form [title]=\"'From Address'\" [(address)]=\"shipment.fromAddress\">\r\n        </app-address-form>\r\n    </div>\r\n</div>\r\n\r\n<div style=\"width:50%;display: inline-block;\">\r\n    <div style=\"padding:5px\">\r\n        <app-address-form [title]=\"'To Address'\" [(address)]=\"shipment.toAddress\"></app-address-form>\r\n    </div>\r\n</div>\r\n<div style=\"padding:5px\">\r\n    <mat-card>\r\n        <mat-card-header>\r\n            <mat-card-title>Customs Info</mat-card-title>\r\n        </mat-card-header>\r\n        <mat-card-content>\r\n            <mat-form-field style=\"width:50%\">\r\n                <mat-select placeholder=\"eel_pfc\" [(ngModel)]=\"shipment.customsInfo.eel_pfc\">\r\n                    <mat-option *ngFor=\"let type of ['NOEEI 30.37(a)' , 'AES X20120502123456']\" [value]=\"type\">\r\n                        {{type}}\r\n                    </mat-option>\r\n                </mat-select>\r\n            </mat-form-field>\r\n            <span style=\"width:50%\">\r\n                <mat-checkbox [(ngModel)]=\"shipment.customsInfo.customs_certify\">customs_certify</mat-checkbox>\r\n            </span>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"customs_signer\" [(ngModel)]=\"shipment.customsInfo.customs_signer\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <mat-select placeholder=\"contents_type\" [(ngModel)]=\"shipment.customsInfo.contents_type\">\r\n                    <mat-option\r\n                        *ngFor=\"let type of ['documents', 'gift', 'merchandise', 'returned_goods', 'sample',  'other']\"\r\n                        [value]=\"type\">\r\n                        {{type}}\r\n                    </mat-option>\r\n                </mat-select>\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"contents_explanation\"\r\n                    [(ngModel)]=\"shipment.customsInfo.contents_explanation\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <mat-select placeholder=\"restriction_type\" [(ngModel)]=\"shipment.customsInfo.restriction_type\">\r\n                    <mat-option\r\n                        *ngFor=\"let type of ['none', 'other', 'quarantine',  'sanitary_phytosanitary_inspection']\"\r\n                        [value]=\"type\">\r\n                        {{type}}\r\n                    </mat-option>\r\n                </mat-select>\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <input matInput placeholder=\"restriction_comments\"\r\n                    [(ngModel)]=\"shipment.customsInfo.restriction_comments\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:50%\">\r\n                <mat-select placeholder=\"non_delivery_option\" [(ngModel)]=\"shipment.customsInfo.non_delivery_option\">\r\n                    <mat-option *ngFor=\"let type of ['abandon' , 'return']\" [value]=\"type\">\r\n                        {{type}}\r\n                    </mat-option>\r\n                </mat-select>\r\n            </mat-form-field>\r\n\r\n            <mat-divider></mat-divider>\r\n            <mat-form-field style=\"width:75%\">\r\n                <input matInput placeholder=\"description\" [(ngModel)]=\"customsItem.description\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"quantity\" type=\"number\" [(ngModel)]=\"customsItem.quantity\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"weight\" type=\"number\" [(ngModel)]=\"customsItem.weight\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"value\" [(ngModel)]=\"customsItem.value\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"hs_tariff_number\" [(ngModel)]=\"customsItem.hs_tariff_number\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <mat-select placeholder=\"origin_country\" [(ngModel)]=\"customsItem.origin_country\">\r\n                    <mat-option *ngFor=\"let type of countries\" [value]=\"type\">\r\n                        {{type}}\r\n                    </mat-option>\r\n                </mat-select>\r\n            </mat-form-field>\r\n\r\n        </mat-card-content>\r\n    </mat-card>\r\n</div>\r\n\r\n<div style=\"padding:5px\">\r\n    <mat-card>\r\n        <mat-card-header>\r\n            <mat-card-title>Parcel</mat-card-title>\r\n        </mat-card-header>\r\n        <mat-card-content>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"length\" type=\"number\" [(ngModel)]=\"shipment.parcel.length\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"width\" type=\"number\" [(ngModel)]=\"shipment.parcel.width\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"height\" type=\"number\" [(ngModel)]=\"shipment.parcel.height\">\r\n            </mat-form-field>\r\n            <mat-form-field style=\"width:25%\">\r\n                <input matInput placeholder=\"weight\" type=\"number\" [(ngModel)]=\"shipment.parcel.weight\">\r\n            </mat-form-field>\r\n        </mat-card-content>\r\n    </mat-card>\r\n</div>\r\n\r\n\r\n<button mat-raised-button color=\"primary\" (click)=\"createShipment()\">Create Shipment</button>\r\n<button mat-raised-button color=\"primary\" (click)=\"regenerateRates()\">Regenerate Rates</button>\r\n\r\n\r\n<div *ngIf=\"result\">\r\n    <!-- <div *ngFor=\"let rate of result.rates\">\r\n        rate\r\n    </div> -->\r\n    <table mat-table [dataSource]=\"result.rates\" class=\"mat-elevation-z8\" style=\"width:100%\">\r\n\r\n        <!--- Note that these columns can be defined in any order.\r\n            The actual rendered columns are set as a property on the row definition\" -->\r\n\r\n        <!-- Position Column -->\r\n        <ng-container matColumnDef=\"carrier\">\r\n            <th mat-header-cell *matHeaderCellDef> carrier </th>\r\n            <td mat-cell *matCellDef=\"let element\"> {{element.carrier}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Position Column -->\r\n        <ng-container matColumnDef=\"service\">\r\n            <th mat-header-cell *matHeaderCellDef> service </th>\r\n            <td mat-cell *matCellDef=\"let element\"> {{element.service}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Weight Column -->\r\n        <ng-container matColumnDef=\"rate\">\r\n            <th mat-header-cell *matHeaderCellDef> rate </th>\r\n            <td mat-cell *matCellDef=\"let element\"> {{element.rate}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Name Column -->\r\n        <ng-container matColumnDef=\"currency\">\r\n            <th mat-header-cell *matHeaderCellDef> currency </th>\r\n            <td mat-cell *matCellDef=\"let element\"> {{element.currency}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Weight Column -->\r\n        <ng-container matColumnDef=\"retail_rate\">\r\n            <th mat-header-cell *matHeaderCellDef> retail_rate </th>\r\n            <td mat-cell *matCellDef=\"let element\"> {{element.retail_rate}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Name Column -->\r\n        <ng-container matColumnDef=\"retail_currency\">\r\n            <th mat-header-cell *matHeaderCellDef> retail_currency </th>\r\n            <td mat-cell *matCellDef=\"let element\"> {{element.retail_currency}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Weight Column -->\r\n        <ng-container matColumnDef=\"list_rate\">\r\n            <th mat-header-cell *matHeaderCellDef> list_rate </th>\r\n            <td mat-cell *matCellDef=\"let element\"> {{element.list_rate}} </td>\r\n        </ng-container>\r\n\r\n        <!-- Name Column -->\r\n        <ng-container matColumnDef=\"list_currency\">\r\n            <th mat-header-cell *matHeaderCellDef> list_currency </th>\r\n            <td mat-cell *matCellDef=\"let element\"> {{element.list_currency}} </td>\r\n        </ng-container>\r\n\r\n\r\n        <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n        <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\r\n    </table>\r\n</div>\r\n\r\n<div style=\"word-break: break-all;margin-top : 10px\">\r\n    {{toJSONString(result.rates)}}\r\n</div>\r\n\r\n<!-- <div style=\"width:50%;display: inline-block;\">\r\n    <div style=\"padding:5px\">\r\n        <app-customs-item [title]=\"'Customs Item'\" [(customsItem)]=\"shipment.customsItem\">\r\n        </app-customs-item>\r\n        <button mat-raised-button color=\"primary\"\r\n            (click)=\"createCustomsItem(shipment.customsItem, 'customsItem')\">create</button>\r\n    </div>\r\n</div> -->"
 
 /***/ }),
 
@@ -447,14 +451,55 @@ var ShipmentFormComponent = /** @class */ (function () {
     function ShipmentFormComponent(http, easyPostService) {
         this.http = http;
         this.easyPostService = easyPostService;
-        this.customsItem = {};
+        this.displayedColumns = ['carrier', 'service', 'rate', 'currency', 'retail_rate', 'retail_currency', 'list_rate', 'list_currency'];
+        this.customsItem = {
+            origin_country: 'US',
+        };
         this.shipment = {
-            from: {},
-            to: {},
-            customsInfo: {},
+            fromAddress: {
+                company: null,
+                street1: '417 Montgomery Street',
+                street2: '5th Floor',
+                city: 'San Francisco',
+                state: 'CA',
+                zip: '94104',
+                country: 'US',
+                phone: '4153334444',
+            },
+            toAddress: {
+                company: null,
+                street1: '179 N Harbor Dr',
+                street2: null,
+                city: 'Redondo Beach',
+                state: 'CA',
+                zip: '90277',
+                country: 'US',
+                phone: '4153334444',
+            },
+            customsInfo: {
+                eel_pfc: 'NOEEI 30.37(a)',
+                non_delivery_option: 'return'
+            },
             parcel: {}
         };
         this.result = {};
+        this.countries = ['BD', 'BE', 'BF', 'BG', 'BA', 'BB', 'WF', 'BL', 'BM', 'BN', 'BO',
+            'BH', 'BI', 'BJ', 'BT', 'JM', 'BV', 'BW', 'WS', 'BQ', 'BR', 'BS', 'JE', 'BY', 'BZ', 'RU',
+            'RW', 'RS', 'TL', 'RE', 'TM', 'TJ', 'RO', 'TK', 'GW', 'GU', 'GT', 'GS', 'GR', 'GQ', 'GP',
+            'JP', 'GY', 'GG', 'GF', 'GE', 'GD', 'GB', 'GA', 'SV', 'GN', 'GM', 'GL', 'GI', 'GH', 'OM',
+            'TN', 'JO', 'HR', 'HT', 'HU', 'HK', 'HN', 'HM', 'VE', 'PR', 'PS', 'PW', 'PT', 'SJ', 'PY',
+            'IQ', 'PA', 'PF', 'PG', 'PE', 'PK', 'PH', 'PN', 'PL', 'PM', 'ZM', 'EH', 'EE', 'EG', 'ZA',
+            'EC', 'IT', 'VN', 'SB', 'ET', 'SO', 'ZW', 'SA', 'ES', 'ER', 'ME', 'MD', 'MG', 'MF', 'MA',
+            'MC', 'UZ', 'MM', 'ML', 'MO', 'MN', 'MH', 'MK', 'MU', 'MT', 'MW', 'MV', 'MQ', 'MP', 'MS',
+            'MR', 'IM', 'UG', 'TZ', 'MY', 'MX', 'IL', 'FR', 'IO', 'SH', 'FI', 'FJ', 'FK', 'FM', 'FO',
+            'NI', 'NL', 'NO', 'NA', 'VU', 'NC', 'NE', 'NF', 'NG', 'NZ', 'NP', 'NR', 'NU', 'CK', 'XK',
+            'CI', 'CH', 'CO', 'CN', 'CM', 'CL', 'CC', 'CA', 'CG', 'CF', 'CD', 'CZ', 'CY', 'CX', 'CR',
+            'CW', 'CV', 'CU', 'SZ', 'SY', 'SX', 'KG', 'KE', 'SS', 'SR', 'KI', 'KH', 'KN', 'KM', 'ST',
+            'SK', 'KR', 'SI', 'KP', 'KW', 'SN', 'SM', 'SL', 'SC', 'KZ', 'KY', 'SG', 'SE', 'SD', 'DO',
+            'DM', 'DJ', 'DK', 'VG', 'DE', 'YE', 'DZ', 'US', 'UY', 'YT', 'UM', 'LB', 'LC', 'LA', 'TV',
+            'TW', 'TT', 'TR', 'LK', 'LI', 'LV', 'TO', 'LT', 'LU', 'LR', 'LS', 'TH', 'TF', 'TG', 'TD',
+            'TC', 'LY', 'VA', 'VC', 'AE', 'AD', 'AG', 'AF', 'AI', 'VI', 'IS', 'IR', 'AM', 'AL', 'AO',
+            'AQ', 'AS', 'AR', 'AU', 'AT', 'AW', 'IN', 'AX', 'AZ', 'IE', 'ID', 'UA', 'QA', 'MZ'];
     }
     ShipmentFormComponent.prototype.createAddress = function (address, saveToField) {
         this.easyPostService.createAddress(address)
@@ -486,7 +531,13 @@ var ShipmentFormComponent = /** @class */ (function () {
         this.easyPostService.createShipment(this.shipment)
             .subscribe(function (result) {
             console.log(result);
-            _this.result.content = JSON.stringify(result);
+            _this.result = result;
+        });
+    };
+    ShipmentFormComponent.prototype.regenerateRates = function () {
+        this.easyPostService.regenerateRates(this.result.id)
+            .subscribe(function (result) {
+            console.log(result);
         });
     };
     ShipmentFormComponent.prototype.toJSONString = function (obj) {
