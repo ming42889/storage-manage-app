@@ -9,10 +9,15 @@ import { EasyPostService } from '../shared/easy-post.service';
 export class ShipmentFormComponent {
     displayedColumns = ['carrier', 'service', 'rate', 'currency', 'retail_rate', 'retail_currency', 'list_rate', 'list_currency'];
 
-
     customsItem: any = {
         origin_country: 'US',
     };
+
+    customsInfo: any = {
+        eel_pfc: 'NOEEI 30.37(a)',
+        non_delivery_option: 'return'
+    };
+
     shipment: any = {
         fromAddress: {
             company: null,
@@ -34,11 +39,8 @@ export class ShipmentFormComponent {
             country: 'US',
             phone: '4153334444',
         },
-        customsInfo: {
-            eel_pfc: 'NOEEI 30.37(a)',
-            non_delivery_option: 'return'
-        },
-        parcel: {}
+        parcel: {},
+        isInternational: false
     };
     result: any = {};
 
@@ -100,7 +102,13 @@ export class ShipmentFormComponent {
     }
 
     createShipment() {
-        this.shipment.customsItems = [this.customsItem];
+        if (this.shipment.isInternational) {
+            this.shipment.customsItems = [this.customsItem];
+            this.shipment.customsInfo = this.customsInfo;
+        } else {
+            this.shipment.customsItems = null;
+            this.shipment.customsInfo = null;
+        }
         this.easyPostService.createShipment(this.shipment)
             .subscribe(
                 result => {

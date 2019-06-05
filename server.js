@@ -89,14 +89,16 @@ app.route('/api/create-shipment').post((req, res) => {
     const fromAddress = new api.Address(request.fromAddress);
     const parcel = new api.Parcel(request.parcel);
 
-    let customs_items = [];
-    request.customsItems.forEach(item => {
-        customs_items.push(new api.CustomsItem(item))
-    });
+    let customsInfo = null;
+    if (request.isInternational) {
+        let customs_items = [];
+        request.customsItems.forEach(item => {
+            customs_items.push(new api.CustomsItem(item))
+        });
 
-    let customsInfo = new api.CustomsInfo(request.customsInfo);
-    customsInfo.customs_items = customs_items;
-
+        customsInfo = new api.CustomsInfo(request.customsInfo);
+        customsInfo.customs_items = customs_items;
+    }
     const shipment = new api.Shipment({
         to_address: toAddress,
         from_address: fromAddress,

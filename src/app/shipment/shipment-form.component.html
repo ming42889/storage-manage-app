@@ -10,27 +10,31 @@
         <app-address-form [title]="'To Address'" [(address)]="shipment.toAddress"></app-address-form>
     </div>
 </div>
-<div style="padding:5px">
+
+
+<mat-checkbox [(ngModel)]="shipment.isInternational">isInternational</mat-checkbox>
+
+<div *ngIf="shipment.isInternational" style="padding:5px">
     <mat-card>
         <mat-card-header>
             <mat-card-title>Customs Info</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <mat-form-field style="width:50%">
-                <mat-select placeholder="eel_pfc" [(ngModel)]="shipment.customsInfo.eel_pfc">
+                <mat-select placeholder="eel_pfc" [(ngModel)]="customsInfo.eel_pfc">
                     <mat-option *ngFor="let type of ['NOEEI 30.37(a)' , 'AES X20120502123456']" [value]="type">
                         {{type}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <span style="width:50%">
-                <mat-checkbox [(ngModel)]="shipment.customsInfo.customs_certify">customs_certify</mat-checkbox>
+                <mat-checkbox [(ngModel)]="customsInfo.customs_certify">customs_certify</mat-checkbox>
             </span>
             <mat-form-field style="width:50%">
-                <input matInput placeholder="customs_signer" [(ngModel)]="shipment.customsInfo.customs_signer">
+                <input matInput placeholder="customs_signer" [(ngModel)]="customsInfo.customs_signer">
             </mat-form-field>
             <mat-form-field style="width:50%">
-                <mat-select placeholder="contents_type" [(ngModel)]="shipment.customsInfo.contents_type">
+                <mat-select placeholder="contents_type" [(ngModel)]="customsInfo.contents_type">
                     <mat-option
                         *ngFor="let type of ['documents', 'gift', 'merchandise', 'returned_goods', 'sample',  'other']"
                         [value]="type">
@@ -39,11 +43,10 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field style="width:50%">
-                <input matInput placeholder="contents_explanation"
-                    [(ngModel)]="shipment.customsInfo.contents_explanation">
+                <input matInput placeholder="contents_explanation" [(ngModel)]="customsInfo.contents_explanation">
             </mat-form-field>
             <mat-form-field style="width:50%">
-                <mat-select placeholder="restriction_type" [(ngModel)]="shipment.customsInfo.restriction_type">
+                <mat-select placeholder="restriction_type" [(ngModel)]="customsInfo.restriction_type">
                     <mat-option
                         *ngFor="let type of ['none', 'other', 'quarantine',  'sanitary_phytosanitary_inspection']"
                         [value]="type">
@@ -52,11 +55,10 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field style="width:50%">
-                <input matInput placeholder="restriction_comments"
-                    [(ngModel)]="shipment.customsInfo.restriction_comments">
+                <input matInput placeholder="restriction_comments" [(ngModel)]="customsInfo.restriction_comments">
             </mat-form-field>
             <mat-form-field style="width:50%">
-                <mat-select placeholder="non_delivery_option" [(ngModel)]="shipment.customsInfo.non_delivery_option">
+                <mat-select placeholder="non_delivery_option" [(ngModel)]="customsInfo.non_delivery_option">
                     <mat-option *ngFor="let type of ['abandon' , 'return']" [value]="type">
                         {{type}}
                     </mat-option>
