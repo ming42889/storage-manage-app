@@ -44,4 +44,9 @@ export class EasyPostService {
             '/regenerate-rates/' + shipmentId);
     }
 
+    buyShipment(request): Observable<any> {
+        return this.http.post(this.baseUrl +
+            '/buy-shipment/', request);
+    }
+
 }

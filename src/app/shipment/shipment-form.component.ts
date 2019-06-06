@@ -7,7 +7,13 @@ import { EasyPostService } from '../shared/easy-post.service';
     templateUrl: 'shipment-form.component.html'
 })
 export class ShipmentFormComponent {
-    displayedColumns = ['carrier', 'service', 'rate', 'currency', 'retail_rate', 'retail_currency', 'list_rate', 'list_currency'];
+    displayedColumns = ['select', 'carrier', 'service', 'rate', 'currency', 'retail_rate', 'retail_currency', 'list_rate', 'list_currency'];
+
+    weight = {
+        lbs: null,
+        oz: null
+
+    };
 
     customsItem: any = {
         origin_country: 'US',
@@ -109,6 +115,13 @@ export class ShipmentFormComponent {
             this.shipment.customsItems = null;
             this.shipment.customsInfo = null;
         }
+        this.shipment.parcel.weight = 0;
+        if (this.weight.oz) {
+            this.shipment.parcel.weight += this.weight.oz;
+        }
+        if (this.weight.lbs) {
+            this.shipment.parcel.weight += 16 * this.weight.lbs;
+        }
         this.easyPostService.createShipment(this.shipment)
             .subscribe(
                 result => {
@@ -119,6 +132,7 @@ export class ShipmentFormComponent {
     }
 
     regenerateRates() {
+        console.log(this.selectedRate)
         this.easyPostService.regenerateRates(this.result.id)
             .subscribe(
                 result => {
@@ -140,4 +154,29 @@ export class ShipmentFormComponent {
                 }
             );
     }
+
+
+    selectedRate;
+
+    selectRate(rate) {
+        this.selectedRate = rate;
+    }
+
+    insurance;
+
+    label_url;
+    buyShipment() {
+        this.easyPostService.buyShipment({
+            shipmentId: this.result.id,
+            selectedRate: this.selectedRate,
+            insurance: this.insurance
+        }).subscribe(
+            result => {
+                console.log(result);
+                this.label_url = result.postage_label.label_url;
+                console.log(this.label_url);
+            }
+        );
+    }
+
 }

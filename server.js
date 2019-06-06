@@ -126,6 +126,19 @@ app.get('/api/regenerate-rates/:id', function (req, res, next) {
     });
 });
 
+app.route('/api/buy-shipment').post((req, res) => {
+    console.log(req.body)
+    const request = req.body;
+    api.Shipment.retrieve(request.shipmentId).then(s => {
+        s.buy(request.selectedRate, request.insurance).then(
+            result => {
+                console.log(result)
+                res.send(200, result);
+            }, error => { console.log(error) }
+        );
+    });
+});
+
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '/dist/storage-manage-app/index.html'));
 });
